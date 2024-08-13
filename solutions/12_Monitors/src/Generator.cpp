@@ -46,7 +46,7 @@ const char* random_string() {
 }
 } // namespace
 
-void Generator::execute() {
+bool Generator::execute() {
   assert(output);
 
   cout << "GENERATOR : ----------------------------------\n";
@@ -66,6 +66,7 @@ void Generator::execute() {
   output->push(move(alarm_ptr));
 
   cout << '\n';
+  return true;
 }
 
 void connect(Generator& gen, Pipe& pipe) {

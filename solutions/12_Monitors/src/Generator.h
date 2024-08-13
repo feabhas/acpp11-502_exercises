@@ -12,7 +12,7 @@ class Pipe;
 
 class Generator : public Filter {
 public:
-  void execute() override;
+  bool execute() override;
 
 private:
   Pipe* output{};

@@ -12,7 +12,7 @@ class Pipe;
 
 class Display : public Filter {
 public:
-  void execute() override;
+  bool execute() override;
 
 private:
   Pipe* input{};

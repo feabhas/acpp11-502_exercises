@@ -15,7 +15,7 @@ class Alarm_filter : public Filter {
 public:
   Alarm_filter(Alarm::Type remove_this);
 
-  void execute() override;
+  bool execute() override;
 
 private:
   Alarm::Type value;

@@ -17,7 +17,7 @@ using namespace std;
 using namespace chrono_literals;
 
 int main(int argc, char** argv) {
-  int const run_count = (argc > 1) ? std::stoi(argv[1]) : 1;
+  int const run_count = (argc > 1) ? std::stoi(argv[1]) : 5;
 
   Pipe pipe1{};
   Pipe pipe2{};
@@ -30,28 +30,23 @@ int main(int argc, char** argv) {
   connect(filter, pipe1, pipe2);
   connect(display, pipe2);
 
-  // Flag to allow the Generator thread
-  // to force the other threads to terminate
-  bool done{};
-
-  auto run_forever = [&done](Filter& filter) {
-    while (!done) {
-      filter.execute();
-      this_thread::yield();
-    }
+  auto run_forever = [](Filter& filter) {
+    while (filter.execute())
+    { }
   };
 
-  std::thread gen_thread{[run_count, &done](Filter& filter) {
+  std::thread gen_thread{[run_count, &pipe1](Filter& filter) {
                            for (int i{}; i < run_count; ++i) {
                              filter.execute();
                              this_thread::sleep_for(500ms);
                            }
-                           done = true;
+                           pipe1.push(nullptr);
                          },
                          ref(generator)};
 
   std::thread filter_thread{run_forever, ref(filter)};
   std::thread display_thread{run_forever, ref(display)};
+  
   // Wait for the threads to
   // finish
   //

@@ -8,7 +8,7 @@
 
 class Filter {
 public:
-  virtual void execute() = 0;
+  virtual bool execute() = 0;
   virtual ~Filter() = default;
 };
 

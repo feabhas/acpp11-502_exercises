@@ -9,20 +9,24 @@
 
 using namespace std;
 
-void Display::execute() {
+bool Display::execute() {
   assert(input);
   if (input->is_empty())
-    return;
+    return true;
 
   cout << "DISPLAY   : ----------------------------------\n";
 
   auto alarm_ptr = input->pull();
+  if (not alarm_ptr) {
+    return false;
+  }
 
   for (auto& alarm : *alarm_ptr) {
     cout << alarm << '\n';
   }
 
   cout << '\n';
+  return true;
 }
 
 void connect(Display& display, Pipe& pipe) {

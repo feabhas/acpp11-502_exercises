@@ -12,15 +12,19 @@ using namespace std;
 
 Alarm_filter::Alarm_filter(Alarm::Type remove_this) : value{remove_this} {}
 
-void Alarm_filter::execute() {
+bool Alarm_filter::execute() {
   assert(input);
   assert(output);
   if (input->is_empty())
-    return;
+    return true;
 
   cout << "ALARM FILTER : -------------------------------\n";
 
   auto alarm_ptr = input->pull();
+  if (not alarm_ptr) {
+    output->push(std::move(alarm_ptr));
+    return false;
+  }
 
   auto original_size = alarm_ptr->size();
 
@@ -37,6 +41,7 @@ void Alarm_filter::execute() {
   output->push(move(alarm_ptr));
 
   cout << '\n';
+  return true;
 }
 
 void connect(Alarm_filter& filter, Pipe& in, Pipe& out) {

@@ -9,17 +9,24 @@
 
 using namespace std;
 
-void Display::execute() {
+bool Display::execute() {
   assert(input);
+  if (input->is_empty())
+    return true;
 
-  if (auto alarm_ptr_opt = input->pull()) {
-    cout << "DISPLAY   : ----------------------------------\n";
-    auto& alarm_ptr = *alarm_ptr_opt;
-    for (auto& alarm : *alarm_ptr) {
-      cout << alarm << '\n';
-    }
-    cout << '\n';
+  cout << "DISPLAY   : ----------------------------------\n";
+
+  auto alarm_ptr = input->pull().value();
+  if (not alarm_ptr) {
+    return false;
   }
+
+  for (auto& alarm : *alarm_ptr) {
+    cout << alarm << '\n';
+  }
+
+  cout << '\n';
+  return true;
 }
 
 void connect(Display& display, Pipe& pipe) {
