@@ -1,7 +1,0 @@
-Checks: '-*,
-    cppcoreguidelines-*,
-    clang-analyzer-*,
-    modernize-*,
-    hicpp-*,
-    llvm-*,
-    -modernize-use-trailing-return-type'
