@@ -13,7 +13,7 @@ void Display::execute() {
   assert(input);
 
   if (auto alarm = input->pull()) {
-    if (alarm && alarm.value()) {
+    if (alarm.value() != nullptr) {
       std::cout << "Display:  " << *(alarm.value()) << '\n';
     }
   }

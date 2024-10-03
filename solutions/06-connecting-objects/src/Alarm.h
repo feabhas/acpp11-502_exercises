@@ -12,11 +12,11 @@ class Alarm {
 public:
   enum class Type { invalid, advisory, caution, warning };
 
-  Alarm()     = default;
-  explicit    Alarm(Type alarm_init);
+  Alarm() = default;
+  explicit Alarm(Type alarm_init);
 
-  auto to_string() -> std::string;
-  auto type() -> Type;
+  const char* to_string() const;
+  Type        type() const;
 
 private:
   Type value{ Type::invalid };

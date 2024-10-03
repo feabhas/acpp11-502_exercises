@@ -29,6 +29,10 @@ void swap(Buffer& lhs, Buffer& rhs) {
   rhs.read_pos = std::begin(rhs.elems) 
                + std::distance(lhs.read_pos, std::begin(lhs.elems));
   lhs.read_pos = std::begin(lhs.elems) + rhs_read;
+  auto rhs_write = std::distance(rhs.write_pos, std::begin(rhs.elems));
+  rhs.write_pos = std::begin(rhs.elems) 
+               + std::distance(lhs.write_pos, std::begin(lhs.elems));
+  lhs.write_pos = std::begin(lhs.elems) + rhs_write;
 }
 
 

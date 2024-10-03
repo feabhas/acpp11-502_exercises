@@ -16,7 +16,7 @@ void test_buffer();
 
 int main()
 {
-  // test_buffer();
+  test_buffer();
 
   Pipe        pipe1{};
   Pipe        pipe2{};
@@ -45,14 +45,15 @@ void test_buffer()
   }
 
   { // Test read from empty
-    assert(!pipe.get(a1));
+    assert(!pipe.get());
   }
 
   { // Test add one
     assert(pipe.add(std::make_unique<Alarm>(*a3)));
     assert(!pipe.is_empty());
-    assert(pipe.get(a1));
-    assert(a1->type() == a3->type());
+    auto alarm = pipe.get();
+    assert(alarm);
+    assert(alarm.value()->type() == a3->type());
     assert(pipe.is_empty());
   }
 
@@ -62,11 +63,13 @@ void test_buffer()
     }
     assert(!pipe.add(std::make_unique<Alarm>()));
   }
+
   { // Test wrap-around behaviour
     // Read 2
     for (std::size_t count = 0; count < 2; ++count) {
-      assert(pipe.get(a1));
-      assert(a1->type() == Alarm::Type(count+1));
+      auto alarm = pipe.get();
+      assert(alarm);
+      assert(alarm.value()->type() == Alarm::Type(count+1));
     }
 
     // write to full again
@@ -78,12 +81,14 @@ void test_buffer()
 
     // read to empty
     for (std::size_t count = 2; count < pipe.capacity(); ++count) {
-      assert(pipe.get(a1));
-      assert(a1->type() == Alarm::Type(count % 3 + 1));
+      auto alarm = pipe.get();
+      assert(alarm);
+      assert(alarm.value()->type() == Alarm::Type(count % 3 + 1));
     }
     for (std::size_t count = 0; count < 2; ++count) {
-      assert(pipe.get(a1));
-      assert(a1->type() == a3->type());
+      auto alarm = pipe.get();
+      assert(alarm);
+      assert(alarm.value()->type() == a3->type());
     }
     assert(pipe.is_empty());
   }
