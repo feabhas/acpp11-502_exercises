@@ -14,6 +14,9 @@
 class Buffer {
 public:
   Buffer()         = default;
+  Buffer(Buffer const& rhs);
+  Buffer& operator=(Buffer const& rhs);
+  friend void swap(Buffer& lhs, Buffer& rhs);
 
   bool add(std::unique_ptr<Alarm> in);
   bool get(std::unique_ptr<Alarm>& out);

@@ -16,7 +16,7 @@ AlarmFilter::AlarmFilter(Alarm::Type remove_this, Pipe& in, Pipe& out)
 
 void AlarmFilter::execute()
 {
-  if (auto alarm = input->pull()) {
+  if (std::optional<Alarm> alarm = input->pull()) {
     if (alarm->type() != this->value) {
       output->push(std::move(alarm.value()));
     }

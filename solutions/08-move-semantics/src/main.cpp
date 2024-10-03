@@ -8,6 +8,7 @@
 #include "AlarmFilter.h"
 #include "Pipeline.h"
 #include <iostream>
+#include <vector>
 
 static constexpr int run_count {4};
 

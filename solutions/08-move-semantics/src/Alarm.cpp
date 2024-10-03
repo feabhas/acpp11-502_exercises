@@ -6,35 +6,10 @@
 #include <utility>
 #include <iostream>
 
-Alarm::Alarm() {
-  std::clog << "Alarm default ctor " << this << '\n';
-}
 
-Alarm::Alarm(Type alarm_init) : value{alarm_init} {
-  std::clog << "Alarm non-default ctor " << this << '\n';
-}
 
-Alarm::~Alarm() {
-  std::clog << "Alarm dtor" << this << '\n';
-}
-
-Alarm::Alarm(Alarm&& rhs) noexcept : Alarm{} {
-  std::clog << "Alarm move ctor " << this << " from " << &rhs << '\n';
-  swap(*this, rhs);
-}
-
-Alarm& Alarm::operator=(Alarm&& rhs) noexcept {
-  std::clog << "Alarm move = " << this << " from " << &rhs << '\n';
-  if (this != &rhs) {
-    value = std::exchange(rhs.value, Type::invalid);
-  }
-  return *this;
-}
-
-void swap(Alarm& lhs, Alarm& rhs) {
-  using std::swap;
-  swap(lhs.value, rhs.value);
-}
+Alarm::Alarm(Type alarm_init) : value{alarm_init} 
+{}
 
 const char* Alarm::to_string() const {
   switch (value) {

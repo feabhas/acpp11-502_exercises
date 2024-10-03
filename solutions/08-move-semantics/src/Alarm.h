@@ -12,12 +12,15 @@ class Alarm {
 public:
   enum class Type { invalid, advisory, caution, warning };
 
-  Alarm();
+  Alarm() = default;
   explicit Alarm(Type alarm_init);
-  ~Alarm();
-  Alarm(Alarm&& rhs) noexcept;
-  Alarm& operator=(Alarm&& rhs) noexcept;
-  friend void swap(Alarm& lhs, Alarm& rhs);
+
+  // Implictly delete when move semantics are explicity defined
+  Alarm(Alarm const&) = delete;
+  Alarm& operator=(Alarm const&) = delete;
+
+  Alarm(Alarm&& rhs) noexcept = default;
+  Alarm& operator=(Alarm&& rhs)  noexcept = default;
   
   const char* to_string() const;
   Type        type() const;

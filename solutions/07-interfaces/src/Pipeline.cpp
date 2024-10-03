@@ -14,7 +14,7 @@ Pipeline::Pipeline(std::initializer_list<Filter*> list)
 
 bool Pipeline::add(Filter& filter)
 {
-  if (next == end(filters)) return false;
+  if (next == std::end(filters)) return false;
 
   *next = &filter;
   ++next;
