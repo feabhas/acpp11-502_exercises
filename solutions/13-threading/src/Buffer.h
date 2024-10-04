@@ -17,7 +17,7 @@ public:
 
   template<typename U>
   bool add(U&& in);
-  bool get(value_type& out);
+  auto get() -> std::optional<value_type>;
 
   bool                  is_empty() const;
   constexpr std::size_t capacity() const { return sz; }
@@ -45,16 +45,16 @@ bool Buffer<T, sz>::add(U&& in) {
 }
 
 template<typename T, std::size_t sz>
-bool Buffer<T, sz>::get(value_type& out)
+auto Buffer<T, sz>::get() -> std::optional<value_type>
 {
-  if (num_elems == 0) return false;
+  if (num_elems == 0) return std::nullopt;
 
-  out = std::move(*read_pos);
+  auto value = std::move(*read_pos);
   --num_elems;
   ++read_pos;
   if (read_pos == std::end(elems)) read_pos = std::begin(elems);
 
-  return true;
+  return value;
 }
 
 template<typename T, std::size_t sz>

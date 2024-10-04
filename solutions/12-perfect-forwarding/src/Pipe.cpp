@@ -11,11 +11,7 @@ bool Pipe::push(value_type&& alarm)
 
 auto Pipe::pull() -> std::optional<value_type> 
 {
-    std::unique_ptr<Alarm> alarm{};
-    if (buffer.get(alarm)) {
-        return alarm;
-    }
-    return std::nullopt;
+    return buffer.get();
 }
 
 bool Pipe::is_empty() const
