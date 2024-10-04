@@ -17,7 +17,7 @@ public:
   using value_type = std::unique_ptr<Alarm>;
 
   bool push(value_type&& alarm);
-  std::optional<value_type> pull();
+  value_type pull();
   bool is_empty() const;
 
 private:

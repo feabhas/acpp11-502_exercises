@@ -24,11 +24,11 @@ bool AlarmFilter::execute()
       std::cout << "Filter:   " << alarm->to_string() << " removed\n";
     }
     return true;
-  } 
+  }
   else {
-      // shutdown
-      output->push(std::move(alarm));
-      return false;
+    // shutdown
+    output->push(std::move(alarm));
+    return false;
   }
 }
 

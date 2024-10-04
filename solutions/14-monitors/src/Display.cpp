@@ -13,9 +13,7 @@ bool Display::execute() {
   assert(input);
 
   if (auto alarm = input->pull()) {
-    if (alarm) {
-      std::cout << "Display:  " << *alarm << '\n';
-    }
+    std::cout << "Display:  " << *alarm << '\n';
     return true;
   }
   return false;

@@ -18,16 +18,16 @@ void Pipe::push(value_type&& alarm)
 
 auto Pipe::pull() -> value_type
 {
-    std::unique_ptr<Alarm> alarm{};
-        {
+    std::optional<value_type> alarm{};
+    {
         // std::unique_lock<std::mutex> lock{ mtx };  // C++14
         std::unique_lock lock{mtx};                   // C++17
-        while (!buffer.get(alarm)) {
+        while (!(alarm = std::move(buffer.get()))) {
             has_data.wait(lock);
         }
         has_space.notify_one();
     }
-    return alarm;
+    return std::move(alarm.value());
 }
 
 bool Pipe::is_empty() const

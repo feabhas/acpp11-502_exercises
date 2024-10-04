@@ -21,7 +21,6 @@ bool Generator::execute() {
   auto alarm = std::make_unique<Alarm>(random_alarm());
   std::cout << "Generate: " << *alarm << '\n';
   output->push(std::move(alarm));
-  std::cout << "Generate: done\n";
   return true;
 }
 

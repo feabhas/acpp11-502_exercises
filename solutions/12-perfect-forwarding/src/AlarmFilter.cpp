@@ -17,15 +17,13 @@ AlarmFilter::AlarmFilter(Alarm::Type remove_this, Pipe& in, Pipe& out)
 void AlarmFilter::execute()
 {
   if (auto alarm = input->pull()) {
-    if (alarm.value()) {
-      if (alarm.value()->type() != this->value) {
-        output->push(std::move(alarm.value()));
-      }
-      else {
-        std::cout << "Filter:   " << alarm.value()->to_string() << " removed\n";
-      }
+    if (alarm->type() != this->value) {
+      output->push(std::move(alarm));
     }
-  } 
+    else {
+      std::cout << "Filter:   " << alarm->to_string() << " removed\n";
+    }
+  }
 }
 
 void connect(AlarmFilter& filter, Pipe& in, Pipe& out)

@@ -13,11 +13,8 @@ void Display::execute() {
   assert(input);
 
   if (auto alarm = input->pull()) {
-    if (alarm.value() != nullptr) {
-      std::cout << "Display:  " << *(alarm.value()) << '\n';
-    }
+    std::cout << "Display:  " << *alarm << '\n';
   }
-
 }
 
 void connect(Display& display, Pipe& pipe) {

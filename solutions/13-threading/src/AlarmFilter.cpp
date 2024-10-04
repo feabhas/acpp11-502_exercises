@@ -16,21 +16,20 @@ AlarmFilter::AlarmFilter(Alarm::Type remove_this, Pipe& in, Pipe& out)
 
 bool AlarmFilter::execute()
 {
-  if (auto optional = input->pull()) {
-    auto& alarm = optional.value();
-    if (!alarm) {
-      // shutdown
-      output->push(std::move(alarm));
-      return false;
-    }
+  if (auto alarm = input->pull()) {
     if (alarm->type() != this->value) {
       output->push(std::move(alarm));
     }
     else {
       std::cout << "Filter:   " << alarm->to_string() << " removed\n";
     }
-  } 
-  return true;
+    return true;
+  }
+  else {
+    // shutdown
+    output->push(std::move(alarm));
+    return false;
+  }
 }
 
 void connect(AlarmFilter& filter, Pipe& in, Pipe& out)

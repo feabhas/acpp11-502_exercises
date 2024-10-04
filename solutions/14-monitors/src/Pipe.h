@@ -19,7 +19,7 @@ public:
   using value_type = std::unique_ptr<Alarm>;
 
   void push(value_type&& alarm);
-  value_type pull();
+  auto pull() -> value_type;
   bool is_empty() const;
 
 private:
