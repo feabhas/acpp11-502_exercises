@@ -18,8 +18,8 @@ public:
   bool add(std::unique_ptr<Alarm> in);
   bool get(std::unique_ptr<Alarm>& out);
 
-  bool                  is_empty() const;
-  constexpr std::size_t capacity() const { return sz; }
+  bool is_empty() const;
+  bool is_full() const;
 
 private:
   static constexpr std::size_t sz{ 8 };

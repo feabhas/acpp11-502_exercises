@@ -12,13 +12,13 @@
 
 class Buffer {
 public:
-  Buffer()         = default;
+  Buffer() = default;
 
   bool add(Alarm&& in);
   bool get(Alarm& out);
 
-  bool                  is_empty() const;
-  constexpr std::size_t capacity() const { return sz; }
+  bool is_empty() const;
+  bool is_full() const;
 
 private:
   static constexpr std::size_t sz{ 4 };

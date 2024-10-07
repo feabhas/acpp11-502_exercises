@@ -32,3 +32,8 @@ bool Buffer::is_empty() const
 {
   return (num_elems == 0);
 }
+
+bool Buffer::is_full() const
+{
+  return (num_elems == sz);
+}

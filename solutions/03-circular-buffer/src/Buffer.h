@@ -17,9 +17,11 @@ public:
   bool add(Alarm const& in);
   bool get(Alarm& out);
 
-  bool                  is_empty() const;
-  constexpr std::size_t capacity() const { return sz; }
+  bool is_empty() const;
+  bool is_full() const;
 
+  constexpr auto capacity() const -> std::size_t { return sz; }
+  
 private:
   static constexpr std::size_t sz{ 8 };
   using Container = std::array<Alarm, sz>;

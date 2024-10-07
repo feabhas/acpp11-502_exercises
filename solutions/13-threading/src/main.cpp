@@ -28,7 +28,7 @@ int main()
       filter.execute();
       std::this_thread::sleep_for(500ms);
     }
-    pipe1.push(nullptr);
+    pipe1.push(std::make_unique<Alarm>(Alarm::Type::invalid));
   };
 
   auto run_forever = [](Filter& filter) {

@@ -6,28 +6,12 @@
 
 void Pipe::push(value_type&& alarm)
 {
-    {
-        // std::unique_lock<std::mutex> lock{ mtx };  // C++14
-        std::unique_lock lock{mtx};                   // C++17
-        while (!buffer.add(std::move(alarm))) {
-            has_space.wait(lock);
-        }
-    }
-    has_data.notify_one();
+    buffer.add(std::move(alarm));
 }
 
 auto Pipe::pull() -> value_type
 {
-    std::optional<value_type> alarm{};
-    {
-        // std::unique_lock<std::mutex> lock{ mtx };  // C++14
-        std::unique_lock lock{mtx};                   // C++17
-        while (!(alarm = std::move(buffer.get()))) {
-            has_data.wait(lock);
-        }
-        has_space.notify_one();
-    }
-    return std::move(alarm.value());
+    return buffer.get();
 }
 
 bool Pipe::is_empty() const

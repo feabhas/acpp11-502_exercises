@@ -17,19 +17,19 @@ AlarmFilter::AlarmFilter(Alarm::Type remove_this, Pipe& in, Pipe& out)
 bool AlarmFilter::execute()
 {
   if (auto alarm = input->pull()) {
+    if (alarm->type() == Alarm::Type::invalid) {
+      // shutdown
+      output->push(std::move(alarm));
+      return false;
+    }
     if (alarm->type() != this->value) {
       output->push(std::move(alarm));
     }
     else {
       std::cout << "Filter:   " << alarm->to_string() << " removed\n";
     }
-    return true;
   }
-  else {
-    // shutdown
-    output->push(std::move(alarm));
-    return false;
-  }
+  return true;
 }
 
 void connect(AlarmFilter& filter, Pipe& in, Pipe& out)

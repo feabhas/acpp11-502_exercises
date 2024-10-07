@@ -13,10 +13,12 @@ bool Display::execute() {
   assert(input);
 
   if (auto alarm = input->pull()) {
-    std::cout << "Display:  " << *alarm << '\n';
-    return true;
+      if (alarm->type() == Alarm::Type::invalid) {
+        return false;
+      }
+      std::cout << "Display:  " << *alarm << '\n';
   }
-  return false;
+  return true;
 }
 
 void connect(Display& display, Pipe& pipe) {

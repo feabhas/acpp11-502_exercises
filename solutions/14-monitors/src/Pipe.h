@@ -10,7 +10,7 @@
 #include <memory>
 #include <condition_variable>
 #include <mutex>
-#include "Buffer.h"
+#include "ConcurrentFifo.h"
 #include "Alarm.h"
 
 class Pipe
@@ -23,12 +23,8 @@ public:
   bool is_empty() const;
 
 private:
-  using Container = Buffer<value_type, 4>;
+  using Container = ConcurrentFifo<value_type, 4>;
   Container buffer{};
-
-  mutable std::mutex mtx{};
-  std::condition_variable has_data{};
-  std::condition_variable has_space{};
 };
 
 #endif

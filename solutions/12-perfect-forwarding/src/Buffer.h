@@ -19,8 +19,8 @@ public:
   bool add(U&& in);
   auto get() -> std::optional<value_type>;
 
-  bool                  is_empty() const;
-  constexpr std::size_t capacity() const { return sz; }
+  bool is_empty() const;
+  bool is_full() const;
 
 private:
   using Container = std::array<value_type, sz>;
@@ -63,5 +63,10 @@ bool Buffer<T, sz>::is_empty() const
   return (num_elems == 0);
 }
 
+template<typename T, std::size_t sz>
+bool Buffer<T, sz>::is_full() const
+{
+  return (num_elems == sz);
+}
 
 #endif
