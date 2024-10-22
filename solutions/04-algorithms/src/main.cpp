@@ -9,14 +9,24 @@
 #include <cassert>
 #include <iostream>
 
-static constexpr unsigned alarm_count {5};
+static constexpr unsigned alarm_count {12};
+
 static std::array<Alarm, alarm_count> alarms {
   Alarm{Alarm::Type::caution},
   Alarm{Alarm::Type::advisory},
-  Alarm{Alarm::Type::warning},
+  Alarm{Alarm::Type::warning}, // 1
   Alarm{Alarm::Type::caution},
-  Alarm{Alarm::Type::warning},
+  Alarm{Alarm::Type::caution},
+  Alarm{Alarm::Type::caution},
+  Alarm{Alarm::Type::advisory},
+  Alarm{Alarm::Type::warning}, // 2
+  Alarm{Alarm::Type::warning}, // 3
+  Alarm{Alarm::Type::caution},
+  Alarm{Alarm::Type::advisory},
+  Alarm{Alarm::Type::warning}, // 4
 };
+
+static constexpr unsigned warning_count {4};
 
 int main() {
   {
@@ -24,21 +34,21 @@ int main() {
       std::begin(alarms), std::end(alarms), 
       [](auto alarm) { return alarm.type() == Alarm::Type::warning; }
     );
-    assert(count == 2);
+    assert(count == warning_count);
   }
 
   {
     auto remove = std::remove_if(
       std::begin(alarms), std::end(alarms), 
-      [](auto alarm) { return alarm.type() == Alarm::Type::caution; }
+      [](auto alarm) { return alarm.type() == Alarm::Type::warning; }
     );
-    for(auto it = remove; it != std::end(alarms); ++it) {
-      *it = Alarm{};
-    }
+    
+    // fill end of array with invalid objects
+    std::fill(remove,  std::end(alarms), Alarm{}); 
 
     auto count = std::count_if(
       std::begin(alarms), std::end(alarms), 
-      [](auto alarm) { return alarm.type() == Alarm::Type::caution; }
+      [](auto alarm) { return alarm.type() == Alarm::Type::warning; }
     );
     assert(count == 0);
 
@@ -47,7 +57,7 @@ int main() {
       std::begin(alarms), std::end(alarms), 
       [](auto alarm) { return alarm.type() != Alarm::Type::invalid; }
     );
-    assert(count == 3);
+    assert(count == (std::size(alarms) - warning_count));
   }
   std::cout << "Completed OK\n";
 }
