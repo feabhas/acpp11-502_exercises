@@ -5,13 +5,16 @@
 #include "Generator.h"
 #include "Pipe.h"
 #include <cassert>
-#include <cstdlib>
 #include <iostream>
+#include <random>
 
 namespace
 {
-  Alarm random_alarm() { 
-    return make_alarm(Alarm::Type((rand()%3) + 1)); 
+  Alarm random_alarm() {
+    static std::random_device rd;
+    static std::mt19937 gen(rd());
+    static std::uniform_int_distribution<> dis(1, 3);
+    return make_alarm(Alarm::Type(dis(gen)));
   }
 } // namespace
 

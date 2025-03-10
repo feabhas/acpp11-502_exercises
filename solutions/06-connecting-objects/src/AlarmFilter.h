@@ -2,7 +2,6 @@
 // See project README.md for disclaimer and additional information.
 // Feabhas Ltd
 
-#pragma once
 #ifndef ALARM_FILTER_H
 #define ALARM_FILTER_H
 

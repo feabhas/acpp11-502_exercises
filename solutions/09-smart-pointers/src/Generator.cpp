@@ -5,20 +5,23 @@
 #include "Generator.h"
 #include "Pipe.h"
 #include <cassert>
-#include <cstdlib>
 #include <iostream>
+#include <random>
 
 namespace
 {
-  Alarm random_alarm() { 
-    return make_alarm(Alarm::Type((rand()%3) + 1)); 
+  auto random_alarm() {
+    static std::random_device rd;
+    static std::mt19937 gen(rd());
+    static std::uniform_int_distribution<> dis(1, 3);
+    return std::make_unique<Alarm>(Alarm::Type(dis(gen)));
   }
 } // namespace
 
 void Generator::execute() {
   assert(output);
 
-  auto alarm = std::make_unique<Alarm>(random_alarm());
+  auto alarm = random_alarm();
   std::cout << "Generate: " << *alarm << '\n';
   output->push(std::move(alarm));
 }

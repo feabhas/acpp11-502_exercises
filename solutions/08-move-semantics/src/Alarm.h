@@ -1,37 +1,38 @@
 // Alarm.h
 // See project README.md for disclaimer and additional information.
 // Feabhas Ltd
-
-#pragma once
 #ifndef ALARM_H
 #define ALARM_H
 
 #include <iosfwd>
+#include <string>
+#include <string_view>
 
 class Alarm {
 public:
-  enum class Type { invalid, advisory, caution, warning };
+  enum Type { invalid, advisory, caution, warning };
 
   Alarm() = default;
   explicit Alarm(Type alarm_init);
+  explicit Alarm(Type alarm_init, std::string_view msg);
 
-  // Implictly delete when move semantics are explicity defined
   Alarm(Alarm const&) = delete;
   Alarm& operator=(Alarm const&) = delete;
+  Alarm(Alarm&&) noexcept = default;
+  Alarm& operator=(Alarm&&) noexcept = default;
 
-  Alarm(Alarm&& rhs) noexcept = default;
-  Alarm& operator=(Alarm&& rhs)  noexcept = default;
-  
-  const char* to_string() const;
-  Type        type() const;
+  Type type() const;
+
+  std::string to_string() const;
 
 private:
-  Type value{ Type::invalid };
+  Type value{Type::invalid};
+  std::string message{};
 };
 
-std::ostream& operator<<(std::ostream& os, const Alarm& alarm);
+std::ostream& operator<<(std::ostream& os, Alarm const& alarm);
 
 void  print_alarm(Alarm const& alarm);
-Alarm make_alarm(Alarm::Type type);
+Alarm make_alarm(Alarm::Type type, std::string_view msg = "");
 
 #endif

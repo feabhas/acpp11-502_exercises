@@ -16,7 +16,7 @@ bool Buffer::add(std::unique_ptr<Alarm> in)
   return true;
 }
 
-bool Buffer::get(std::unique_ptr<Alarm>&  out)
+bool Buffer::get(std::unique_ptr<Alarm>& out)
 {
   if (num_elems == 0) return false;
 

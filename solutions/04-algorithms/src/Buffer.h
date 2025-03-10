@@ -19,6 +19,8 @@ public:
 
   bool is_empty() const;
   bool is_full() const;
+
+  constexpr auto capacity() const -> std::size_t { return sz; }
   
 private:
   static constexpr std::size_t sz{ 8 };
