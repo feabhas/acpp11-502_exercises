@@ -23,9 +23,9 @@ Alarm::Alarm(Type alarm_init, std::string_view msg)
 
 std::string Alarm::to_string() const {
   if(message.empty()) {
-    return std::string{alarm_strings.at(value)};
+    return std::string{alarm_strings.at(std::size_t(value))};
   }
-  return std::string{alarm_strings.at(value)} + std::string{" : "} + message;
+  return std::string{alarm_strings.at(std::size_t(value))} + std::string{" : "} + message;
 }
 
 Alarm::Type Alarm::type() const {

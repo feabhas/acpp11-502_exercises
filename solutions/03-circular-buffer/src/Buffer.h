@@ -1,8 +1,6 @@
 // Buffer.h
 // See project README.md for disclaimer and additional information.
 // Feabhas Ltd
-
-#pragma once
 #ifndef BUFFER_H
 #define BUFFER_H
 
@@ -30,6 +28,8 @@ private:
   Container::iterator write_pos{std::begin(elems)};
   Container::iterator read_pos{std::begin(elems)};
   size_t      num_elems {};
+
+  void inc_iterator(Container::iterator& it);
 };
 
 #endif

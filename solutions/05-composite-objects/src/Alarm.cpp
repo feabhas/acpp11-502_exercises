@@ -16,7 +16,7 @@ Alarm::Alarm(Type alarm_init) : value{alarm_init} {
 }
 
 const char* Alarm::to_string() const {
-  return alarm_strings[value];
+  return alarm_strings[std::size_t(value)];
 }
 
 Alarm::Type Alarm::type() const {

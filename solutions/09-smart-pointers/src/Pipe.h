@@ -12,8 +12,10 @@
 class Pipe
 {
 public:
-  bool push(std::unique_ptr<Alarm> alarm);
-  std::unique_ptr<Alarm> pull();
+ using value_type = std::unique_ptr<Alarm>;
+
+  bool push(value_type alarm);
+  value_type pull();
   bool is_empty() const;
 
 private:

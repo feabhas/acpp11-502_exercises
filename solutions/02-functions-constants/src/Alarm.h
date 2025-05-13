@@ -8,7 +8,7 @@
 
 class Alarm {
 public:
-  enum Type { invalid, advisory, caution, warning };
+  enum class Type { invalid, advisory, caution, warning };
 
   Alarm() = default;
   explicit Alarm(Type alarm_init);

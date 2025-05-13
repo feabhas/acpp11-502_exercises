@@ -30,6 +30,8 @@ private:
   Container::iterator write_pos{std::begin(elems)};
   Container::iterator read_pos{std::begin(elems)};
   size_t      num_elems {};
+
+  void inc_iterator(Container::iterator& it);
 };
 
 #endif
