@@ -8,10 +8,7 @@ Exercise solutions and cmake projects for:
 - [Advanced Real-Time Modern C++ (C++11/14/17) Exercises](#advanced-real-time-modern-c-c111417-exercises)
 - [Folder structure](#folder-structure)
   - [Solutions](#solutions)
-- [Build Toolchain](#build-toolchain)
-  - [Build the application](#build-the-application)
-  - [Visual Studio shortcuts](#visual-studio-shortcuts)
-  - [Command line builds](#command-line-builds)
+- [Pre-built Projects](#pre-built-projects)
   - [Building an exercise solution](#building-an-exercise-solution)
 - [Disclaimer](#disclaimer)
 
@@ -21,126 +18,58 @@ Exercise solutions and cmake projects for:
 
 Solutions are provided for all exercises. 
 
-# Build Toolchain
+Each exercise is number and named associated with the Advanced C++ Exercise in your supplied manual, e.g.
 
-The primary build environment for Feabhas projects is Ubuntu Linux using
-the Linux GNU Toolchain (for host based courses), or the Arm GNU Toolchain 
-(for embedded courses), and the [CMake](https://cmake.org/) build system. 
+For Exercise 1 - User-defined types, the associated solution folder is
 
-GitHub projects supporting both toolchains are available to download for
-users that can run [Docker](https://docs.docker.com/get-docker/) on 
-Windows, macOs or Linux.  
+   `01-user-defined-types`
 
-The projects are configured for use with 
-[Visual Studio Code](https://code.visualstudio.com/) and the 
-[devcontainers](https://code.visualstudio.com/docs/devcontainers/containers)
-extension.
+Many of the solutions have an `src` and `test` folder.
 
-The following GitHub projects are available:
+# Pre-Built Projects
 
-   * Hosted courses: https://github.com/feabhas/docker-host
-   * Embedded courses https://github.com/feabhas/docker-target
+These solutions are intended to be used with pre-defined CMake projects
 
-The projects download the `feabhas\ubuntu-projects` image from
-[Docker Hub](https://hub.docker.com/r/feabhas/ubuntu-projects) and 
-when started will configure the project workspace with the appropriate build 
-environment.
+## CMake-Host
 
-Details for using the VS Code based projects are included in the
-`README.md` files and are briefly described below.
+The CMake-Host project is contructed to run the C++ exercises natively. It requires local installation of:
+* C++ compiler
+* CMake
+* md5sum / md5sha1sum
+* VSCode (optional if running from the CLI)
+* (optional) GoogleTest
 
-## Build the application
+Full project details and the download can be found at the [CMake-Host repository](https://github.com/feabhas/cmake-host).
 
-Using CMake is a two step process: 
-   1. generate build configuration files
-   2. run the build 
+## Docker-Host
 
-To simplify  this and to allow you to add additional source and 
-header files we have created a front end script `build.sh` to automate 
-the build.
+The Docker-Host project is designed to run using VSCode and the DevContainer extension.
+To run it requires:
+* Docker Desktop
+* VSCode with devcontainer extension
 
-You should add additional C/C++ source and header files to the `src` 
-directory. If you prefer you can place your header files in the `include`
-directory.
-
-## Visual Studio shortcuts
-
-From within VS Code you can use the keyboard shortcut `Ctrl-Shift-B` 
-to run one of the build tasks:
-    * **Build** standard build
-    * **Clean** to remove object and executable files
-    * **Reset** to regenerate the CMake build files
-
-To run the application without debugging:
-
-   * in VS code press Ctrl-Shft-P and type `test task` 
-   * in the popup list select **Tasks: Run Test task**
-   * in the list of tasks select **Run Application**
-
-## Command line builds
-
-In the project root do:
-
-```
-$ ./build.sh
-```
-
-This will generate the file build/debug/Application.elf on an Arm target
-project or build/debug/Application on the host. Additional size and hex 
-files used by some flash memory software tools are generated for the 
-Arm target.
-
-You can add a -v option see the underlying build commands:
-
-```
-$ ./build.sh -v
-```
-
-The build.sh script supports the --help option for more information.
-
-To delete all object files and recompile the complete project 
-use the clean option:
-
-```
-$ ./build.sh clean
-```
-
-To clean the entire build directory and regenerate a new build 
-configuration use the reset option:
-
-```
-$ ./build.sh reset
-```
-
-To run a hosted application from the command line use the command:
-
-```
-$ ./build/debug/Application
-```
+Full project details and download can be found at [Docker-Host repository](https://github.com/feabhas/docker-host).
 
 ## Building an exercise solution
 
-To build any of the exercise solutions run the script:
+After copying the solutions directory into your project (CMake-Host/Docker-Host), you can build any of the individual exercise solutions.
+
+To build a particular solution run the script:
 ```
 $ ./build-one.sh N 
 ```
 where `N` is the exercise number.
 
 The script will initially look in the workspace for a folder 
-called `exercises` and copy the colutions from there. Fallback locations for solutions inlude a `solutions` folder in the work space or
+called `exercises` and copy the colutions from there. Fallback locations for solutions icnlude a `solutions` folder in the workspace or
 and `exercises` or `solutions` folder in the home directory.
-
-If youb are not using a presupplied VM you will need to copy the 
-`exercises` folder in this project to your project workspace. This also 
-applies if you are using teh Feabhas Docker image. 
 
 **NOTE:** building a solution will copy all files in the `src` directory to 
 the `src.bak` directory having removed any files already present in `src.bak`.
 
 The `build-one.sh` script supports the `--help` option for more information.
 
-Do not use the `--all` option as this will build each solution in turn and 
-is used as part of our Continuous Integration testing.
+Do not use the `--all` option as this will build each solution in turn and is used as part of our Continuous Integration testing.
 
 # Disclaimer
 
