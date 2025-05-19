@@ -1,4 +1,4 @@
-// Alarm_tests.cpp
+// alarm_tests.cpp
 // See project README.md for disclaimer and additional information.
 // Feabhas Ltd
 
@@ -35,44 +35,44 @@ TEST_F(AlarmTest, type_warning) {
 
 TEST_F(AlarmTest, string_invalid) {
   Alarm a{};
-  ASSERT_EQ("invalid", a.to_string());
+  ASSERT_EQ(std::string_view{"invalid"}, std::string_view{a.to_string()});
 }
 
 TEST_F(AlarmTest, string_advisory) {
   Alarm a{Alarm::Type::advisory};
-  ASSERT_EQ("advisory", a.to_string());
+  ASSERT_EQ(std::string_view{"advisory"}, std::string_view{a.to_string()});
 }
 
 TEST_F(AlarmTest, string_caution) {
   Alarm a{Alarm::Type::caution};
-  ASSERT_EQ("caution", a.to_string());
+  ASSERT_EQ(std::string_view{"caution"}, std::string_view{a.to_string()});
 }
 
 TEST_F(AlarmTest, string_warning) {
   Alarm a{Alarm::Type::warning};
-  ASSERT_EQ("warning", a.to_string());
+  ASSERT_EQ(std::string_view{"warning"}, std::string_view{a.to_string()});
 }
 
 TEST_F(AlarmTest, ostream_invalid) {
   Alarm a{};
   ss << a;
-  ASSERT_EQ("invalid", ss.str());
+  ASSERT_EQ(std::string_view{"invalid"}, ss.str());
 }
 
 TEST_F(AlarmTest, ostream_advisory) {
   Alarm a{Alarm::Type::advisory};
   ss << a;
-  ASSERT_EQ("advisory", ss.str());
+  ASSERT_EQ(std::string_view{"advisory"}, ss.str());
 }
 
 TEST_F(AlarmTest, ostream_caution) {
   Alarm a{Alarm::Type::caution};
   ss << a;
-  ASSERT_EQ("caution", ss.str());
+  ASSERT_EQ(std::string_view{"caution"}, ss.str());
 }
 
 TEST_F(AlarmTest, ostream_warning) {
   Alarm a{Alarm::Type::warning};
   ss << a;
-  ASSERT_EQ("warning", ss.str());
+  ASSERT_EQ(std::string_view{"warning"}, ss.str());
 }

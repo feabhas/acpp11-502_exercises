@@ -5,6 +5,13 @@
 #include "Alarm.h"
 #include <iostream>
 
+static const char* alarm_strings[] = {
+  "invalid",
+  "advisory",
+  "caution",
+  "warning"
+};
+
 Alarm::Alarm() {
   std::clog << "Alarm default ctor " << this << '\n';
 }
@@ -18,16 +25,7 @@ Alarm::~Alarm() {
 }
 
 const char* Alarm::to_string() const {
-  switch (value) {
-  case advisory:
-    return "advisory";
-  case caution:
-    return "caution";
-  case warning:
-    return "warning";
-  default:
-    return "invalid";
-  }
+  return alarm_strings[value];
 }
 
 Alarm::Type Alarm::type() const {

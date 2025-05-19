@@ -2,20 +2,19 @@
 // See project README.md for disclaimer and additional information.
 // Feabhas Ltd
 
-#pragma once
 #ifndef ALARM_FILTER_H
 #define ALARM_FILTER_H
 
-#include "Alarm.h"
 #include "Filter.h"
+#include "Alarm.h"
+
 class Pipe;
 
-class AlarmFilter : public Filter
-{
+class AlarmFilter : public Filter {
 public:
   explicit AlarmFilter(Alarm::Type remove_this);
   explicit AlarmFilter(Alarm::Type remove_this, Pipe& in, Pipe& out);
-  void execute() override;
+  void execute();
 
 private:
   Alarm::Type value;

@@ -1,8 +1,6 @@
 // Alarm.h
 // See project README.md for disclaimer and additional information.
 // Feabhas Ltd
-
-#pragma once
 #ifndef ALARM_H
 #define ALARM_H
 

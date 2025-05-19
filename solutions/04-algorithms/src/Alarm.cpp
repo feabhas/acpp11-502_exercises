@@ -5,20 +5,18 @@
 #include "Alarm.h"
 #include <iostream>
 
-Alarm::Alarm(Type alarm_init) : value{ alarm_init }
-{}
+static const char* alarm_strings[] = {
+  "invalid",
+  "advisory",
+  "caution",
+  "warning"
+};
+
+Alarm::Alarm(Type alarm_init) : value{alarm_init} {
+}
 
 const char* Alarm::to_string() const {
-  switch (value) {
-  case Type::advisory:
-    return "advisory";
-  case Type::caution:
-    return "caution";
-  case Type::warning:
-    return "warning";
-  default:
-    return "invalid";
-  }
+  return alarm_strings[std::size_t(value)];
 }
 
 Alarm::Type Alarm::type() const {
@@ -29,6 +27,7 @@ std::ostream& operator<<(std::ostream& os, Alarm const& alarm) {
   os << alarm.to_string();
   return os;
 }
+
 
 Alarm make_alarm(Alarm::Type type)
 {

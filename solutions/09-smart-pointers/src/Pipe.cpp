@@ -4,14 +4,14 @@
 
 #include "Pipe.h"
 
-bool Pipe::push(std::unique_ptr<Alarm> alarm)
+bool Pipe::push(value_type alarm)
 {
     return buffer.add(std::move(alarm));
 }
 
-std::unique_ptr<Alarm>  Pipe::pull()
+Pipe::value_type Pipe::pull()
 {
-    std::unique_ptr<Alarm> alarm{};
+    value_type alarm;
     if (buffer.get(alarm)) {
         return alarm;
     }

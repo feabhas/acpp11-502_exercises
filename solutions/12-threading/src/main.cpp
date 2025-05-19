@@ -11,8 +11,6 @@
 #include <thread>
 #include <chrono>
 
-using namespace std::chrono_literals;
-
 static constexpr int run_count {6};
 
 int main()
@@ -24,6 +22,7 @@ int main()
   Display     display{ pipe2 };
 
   auto run_fixed = [&pipe1](Filter& filter) {
+    using namespace std::chrono_literals;
     for (int i{}; i < run_count; ++i) {
       filter.execute();
       std::this_thread::sleep_for(500ms);

@@ -10,8 +10,8 @@ bool Buffer::add(Alarm&& in)
 
   *write_pos = std::move(in);
   ++num_elems;
-  ++write_pos;
-  if (write_pos == std::end(elems)) write_pos = std::begin(elems);
+  inc_iterator(write_pos); // Use inc_iterator here
+
 
   return true;
 }
@@ -22,8 +22,8 @@ bool Buffer::get(Alarm&  out)
 
   out = std::move(*read_pos);
   --num_elems;
-  ++read_pos;
-  if (read_pos == std::end(elems)) read_pos = std::begin(elems);
+  inc_iterator(read_pos); // Use inc_iterator here
+
 
   return true;
 }
@@ -36,4 +36,10 @@ bool Buffer::is_empty() const
 bool Buffer::is_full() const
 {
   return (num_elems == sz);
+}
+
+void Buffer::inc_iterator(Container::iterator& it)
+{
+  ++it;
+  if (it == std::end(elems)) it = std::begin(elems);  
 }

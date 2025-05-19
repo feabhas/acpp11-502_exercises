@@ -2,7 +2,6 @@
 // See project README.md for disclaimer and additional information.
 // Feabhas Ltd
 
-#pragma once
 #ifndef BUFFER_H
 #define BUFFER_H
 
@@ -21,6 +20,8 @@ public:
   bool is_empty() const;
   bool is_full() const;
 
+  constexpr auto capacity() const -> std::size_t { return sz; }
+  
 private:
   static constexpr std::size_t sz{ 8 };
   using Container = std::array<std::unique_ptr<Alarm>, sz>;
@@ -29,6 +30,8 @@ private:
   Container::iterator write_pos{std::begin(elems)};
   Container::iterator read_pos{std::begin(elems)};
   size_t      num_elems {};
+
+  void inc_iterator(Container::iterator& it);
 };
 
 #endif

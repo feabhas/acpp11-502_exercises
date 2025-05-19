@@ -1,8 +1,6 @@
 // Alarm.h
 // See project README.md for disclaimer and additional information.
 // Feabhas Ltd
-
-#pragma once
 #ifndef ALARM_H
 #define ALARM_H
 
@@ -15,14 +13,15 @@ public:
   Alarm() = default;
   explicit Alarm(Type alarm_init);
 
+  Type type() const;
+
   const char* to_string() const;
-  Type        type() const;
 
 private:
-  Type value{ Type::invalid };
+  Type value{Type::invalid};
 };
 
-std::ostream& operator<<(std::ostream& os, const Alarm& alarm);
+std::ostream& operator<<(std::ostream& os, Alarm const& alarm);
 
 void  print_alarm(Alarm const& alarm);
 Alarm make_alarm(Alarm::Type type);

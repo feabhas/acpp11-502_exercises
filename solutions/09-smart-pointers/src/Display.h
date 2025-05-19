@@ -2,19 +2,18 @@
 // See project README.md for disclaimer and additional information.
 // Feabhas Ltd
 
-#pragma once
 #ifndef DISPLAY_H
 #define DISPLAY_H
 
 #include "Filter.h"
+
 class Pipe;
 
-class Display : public Filter 
-{
+class Display : public Filter {
 public:
   Display() = default;
   explicit Display(Pipe& ip);
-  void execute() override;
+  void execute();
 
 private:
   Pipe* input{};

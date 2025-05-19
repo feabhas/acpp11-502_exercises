@@ -3,39 +3,29 @@
 // Feabhas Ltd
 
 #include "Alarm.h"
-#include <utility>
 #include <iostream>
+#include <array>
 
+constexpr std::array<std::string_view,4> alarm_strings
+{
+  "invalid",
+  "advisory",
+  "caution",
+  "warning"
+};
 
-Alarm::Alarm(Type alarm_init) : value{alarm_init} {}
-
-Alarm::Alarm(Alarm&& rhs) noexcept : Alarm{} {
-  swap(*this, rhs);
+Alarm::Alarm(Type alarm_init) : value{alarm_init} {
 }
 
-Alarm& Alarm::operator=(Alarm&& rhs) noexcept {
-  if (this != &rhs) {
-    value = std::exchange(rhs.value, Type::invalid);
+Alarm::Alarm(Type alarm_init, std::string_view msg)
+  : value{alarm_init}, message{msg} {
+}
+
+std::string Alarm::to_string() const {
+  if(message.empty()) {
+    return std::string{alarm_strings.at(value)};
   }
-  return *this;
-}
-
-void swap(Alarm& lhs, Alarm& rhs) {
-  using std::swap;
-  swap(lhs.value, rhs.value);
-}
-
-const char* Alarm::to_string() const {
-  switch (value) {
-  case Type::advisory:
-    return "advisory";
-  case Type::caution:
-    return "caution";
-  case Type::warning:
-    return "warning";
-  default:
-    return "invalid";
-  }
+  return std::string{alarm_strings.at(value)} + std::string{" : "} + message;
 }
 
 Alarm::Type Alarm::type() const {
@@ -47,9 +37,9 @@ std::ostream& operator<<(std::ostream& os, Alarm const& alarm) {
   return os;
 }
 
-Alarm make_alarm(Alarm::Type type)
-{
-  return Alarm{ type };
+
+Alarm make_alarm(Alarm::Type type, std::string_view msg) {
+  return Alarm{ type, msg };
 }
 
 void print_alarm(Alarm const& alarm)
